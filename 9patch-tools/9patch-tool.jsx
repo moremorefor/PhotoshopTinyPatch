@@ -1,13 +1,15 @@
 /* 
 <javascriptresource>
-<name>9-patch Tools</name>
+<name>9-patch Tool</name>
 <category>mobile</category>
 </javascriptresource>
 */
 
 /*
  * auther: Tsukada Takumi (more_more_for)
- * 
+ * mail: web.moremorefor@gmail.com
+ * license: MIT License
+ * ver: 1.00
  */
 // =======================================================
 var id1074 = charIDToTypeID( "setd" );

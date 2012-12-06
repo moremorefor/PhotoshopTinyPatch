@@ -7,7 +7,9 @@
 
 /*
  * auther: Tsukada Takumi (more_more_for)
- * 
+ * mail: web.moremorefor@gmail.com
+ * license: MIT License
+ * ver: 1.00
  */
 
 preferences.rulerUnits = Units.PIXELS;
@@ -52,17 +54,17 @@ function resizeOnePx(doc, w, h) {
   doc.resizeCanvas( w+2, h+2, AnchorPosition.MIDDLECENTER);
 }
 
-
+/*
+ * PSD保存
+ */
 function saveObj() {
-  /*var webOpt = new ExportOptionsSaveForWeb(); // 保存Objectを作成
-  webOpt.format = SaveDocumentType.PNG;
-  webOpt.PNG8 = false; // PNG-24*/
-
   var newFile = new File(pFolderObj.fsName+ "/" +docName.split(".")[0] + ".9.psd");
-  //newDoc.exportDocument(newFile, ExportType.SAVEFORWEB, webOpt);
   newDoc.saveAs(newFile);
 }
 
+/*
+ * 4点の描画
+ */
 function makeDefaultDotSet(doc, docW, docH) {
   makeDot(doc, "BOTTOM", [docW,docH+1], [docW+1,docH+1], [docW+1,docH+2], [docW,docH+2] );
   makeDot(doc, "RIGHT", [docW+1,docH], [docW+2,docH], [docW+2,docH+1], [docW+1,docH+1] );
@@ -70,8 +72,10 @@ function makeDefaultDotSet(doc, docW, docH) {
   makeDot(doc, "UP", [1,0], [2,0], [2,1], [1,1] );
 }
 
+/*
+ * ドットの描画
+ */
 function makeDot(doc, layerName, select1, select2, select3, select4) {
-
 var layObj = doc.artLayers.add();
 doc.activeLayer = layObj;
 doc.activeLayer.name = layerName;
@@ -82,9 +86,8 @@ color.green = 0;
 color.blue = 0;
 color.model = ColorModel.RGB; 
 
-selReg = [select1, select2, select3, select4];
-activeDocument.selection.select(selReg);
-//activeDocument.selection.fill("black",ColorBlendMode.NORMAL, 100, false);
+selectRange = [select1, select2, select3, select4];
+activeDocument.selection.select(selectRange);
 var idFl = charIDToTypeID( "Fl  " );
     var desc77 = new ActionDescriptor();
     var idUsng = charIDToTypeID( "Usng" );
