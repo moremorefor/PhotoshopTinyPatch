@@ -1,0 +1,50 @@
+/*
+ * FWPageExportToPsd.jsf
+ *
+ * Copyright (c) more_more_for.
+ *
+ * This software is released under the MIT License.
+ * http://opensource.org/licenses/mit-license.php
+ *
+ */
+
+var choosefile = fw.locateDocDialog(0, ["PNG"])[0];
+var dir = Files.getDirectory(choosefile);
+var files;
+if(Files.exists(dir)){
+  files = Files.enumFiles(dir);
+  for(var i = 0; i < files.length; i++){
+    var targetpath = files[i];
+    if(Files.isDirectory(targetpath)) {
+      continue;
+    }
+    if(Files.getExtension(targetpath) != '.png'){
+      continue;
+    }
+    fw.openDocument(targetpath);
+
+    var docInfo = new DocumentInfo(fw.getDocumentDOM())
+    if (!Files.exists(docInfo.directoryPath + docInfo.fileName)) {
+      if(!Files.createDirectory( docInfo.directoryPath + docInfo.fileName)) {
+        alert("Error: can't create directory.")
+      }
+    }
+
+    for (var j=0; j < fw.getDocumentDOM().pagesCount; j++) {
+      fw.getDocumentDOM().changeCurrentPage(j);
+      var exportname = fw.getDocumentDOM().pageName + '.psd'
+      var exportpath = Files.makePathFromDirAndFile(dir + "/" + docInfo.fileName + "/", exportname);
+      fw.exportPSD(null, exportpath);
+    }
+
+    fw.closeDocument(fw.documents[0], false);
+  }
+}
+
+function DocumentInfo( doc ){
+  this.fileFullName = doc.filePathForSave.split("/").pop();
+  this.fileName = this.fileFullName.split(".")[0];;
+  this.fileExtension = this.fileFullName.split(".").pop();
+  this.filePath = doc.filePathForSave;
+  this.directoryPath = this.filePath.split(this.fileName)[0];
+}

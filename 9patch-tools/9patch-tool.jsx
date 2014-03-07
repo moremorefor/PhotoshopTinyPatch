@@ -1,15 +1,11 @@
-/* 
-<javascriptresource>
-<name>9-patch Tool</name>
-<category>mobile</category>
-</javascriptresource>
-*/
-
 /*
- * auther: Tsukada Takumi (more_more_for)
- * mail: web.moremorefor@gmail.com
- * license: MIT License
- * ver: 1.00
+ * 9patch-tool.jsx
+ *
+ * Copyright (c) more_more_for.
+ *
+ * This software is released under the MIT License.
+ * http://opensource.org/licenses/mit-license.php
+ *
  */
 // =======================================================
 var id1074 = charIDToTypeID( "setd" );

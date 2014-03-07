@@ -1,15 +1,11 @@
-/* 
-<javascriptresource>
-<name>FlattenAndSave_jpg</name>
-<category>web</category>
-</javascriptresource>
-*/
-
 /*
- * auther: Tsukada Takumi (more_more_for)
- * mail: web.moremorefor@gmail.com
- * license: MIT License
- * ver: 1.00
+ * FlattenAndSave_jpg.jsx
+ *
+ * Copyright (c) more_more_for.
+ *
+ * This software is released under the MIT License.
+ * http://opensource.org/licenses/mit-license.php
+ *
  */
 
 var doc = activeDocument;

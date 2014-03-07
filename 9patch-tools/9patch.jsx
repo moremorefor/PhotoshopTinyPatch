@@ -1,31 +1,27 @@
-/* 
-<javascriptresource>
-<name>9-patch</name>
-<category>mobile</category>
-</javascriptresource>
-*/
-
 /*
- * auther: Tsukada Takumi (more_more_for)
- * mail: web.moremorefor@gmail.com
- * license: MIT License
- * ver: 1.00
+ * 9patch.jsx
+ *
+ * Copyright (c) more_more_for.
+ *
+ * This software is released under the MIT License.
+ * http://opensource.org/licenses/mit-license.php
+ *
  */
 
 preferences.rulerUnits = Units.PIXELS;
 
 var d = activeDocument;
 
-var docPath = d.fullName.toString(); //fullName:ドキュメントの保存されている絶対パス
-var docName = d.name.toString(); //ファイル名（拡張子含む）
-var filePath = docPath.split(docName)[0]; //Folderのパスを取得(カレントディレクトリ)
-var folderObj = new Folder(filePath); //Folderオブジェクトの作成
+var docPath = d.fullName.toString();
+var docName = d.name.toString();
+var filePath = docPath.split(docName)[0];
+var folderObj = new Folder(filePath);
 var pFolderObj = new Folder(filePath+"9patch");
 
 //フォルダの検証・作成
 if (pFolderObj.exists) {
 } else {
-  var result = pFolderObj.create(); //戻り値はBoolean
+  var result = pFolderObj.create();
   if (result){
   }else {
     alert("フォルダが作成出来ませんでした");
@@ -38,7 +34,6 @@ var w = newDoc.width;
 var h = newDoc.height;
 resizeOnePx(newDoc, w, h);
 
-//デフォルトの4点を作成
 makeDefaultDotSet(newDoc, w, h);
 
 saveObj();
@@ -84,7 +79,7 @@ var color = new SolidColor();
 color.red = 255;
 color.green = 0;
 color.blue = 0;
-color.model = ColorModel.RGB; 
+color.model = ColorModel.RGB;
 
 selectRange = [select1, select2, select3, select4];
 activeDocument.selection.select(selectRange);

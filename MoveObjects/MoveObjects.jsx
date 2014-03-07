@@ -1,13 +1,11 @@
-/* 
-<javascriptresource>
-<name>Move Objects</name>
-<category>web</category>
-</javascriptresource>
-*/
-
 /*
- * auther: Tsukada Takumi (@more_more_for)
- * ver: 1.0.2
+ * MoveObjects.jsx
+ *
+ * Copyright (c) more_more_for.
+ *
+ * This software is released under the MIT License.
+ * http://opensource.org/licenses/mit-license.php
+ *
  */
 
 
@@ -51,12 +49,6 @@ function createDialog() {
         return dlg;
 }
 function initializeDialog(w) {
-  // w.allText.onChange = w.allText.onChange = function() {
-  //           w.movingX.text = w.allText.text;
-  //           w.movingY.text = w.allText.text;
-  //           changed = true;
-
-  // }
   w.okButton.onClick = w.okButton.onClick = function() {
       var moveLayer = d.activeLayer;
 
@@ -85,7 +77,7 @@ function initializeDialog(w) {
 function runDialog(w) {
     return w.show();
 };
-  
+
 function main() {
   var win = createDialog();
     initializeDialog(win);

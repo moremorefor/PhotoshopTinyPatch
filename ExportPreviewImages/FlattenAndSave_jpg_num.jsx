@@ -1,29 +1,24 @@
-/* 
-<javascriptresource>
-<name>FlattenAndSave_jpg_num</name>
-<category>web</category>
-</javascriptresource>
-*/
-
 /*
- * auther: Tsukada Takumi (more_more_for)
- * mail: web.moremorefor@gmail.com
- * license: MIT License
- * ver: 1.00
+ * FlattenAndSave_jpg_num.jsx
+ *
+ * Copyright (c) more_more_for.
+ *
+ * This software is released under the MIT License.
+ * http://opensource.org/licenses/mit-license.php
+ *
  */
 
 var doc = activeDocument;
-var docPath = doc.fullName.toString(); //fullName:ドキュメントの保存されている絶対パス
-var docName = doc.name.toString(); //ファイル名（拡張子含む）
-var filePath = docPath.split(docName)[0]; //Folderのパスを取得(カレントディレクトリ)
-var folderObj = new Folder(filePath); //Folderオブジェクトの作成
+var docPath = doc.fullName.toString();
+var docName = doc.name.toString();
+var filePath = docPath.split(docName)[0];
+var folderObj = new Folder(filePath);
 var previewsFolderObj = new Folder(filePath+"previews");
 
-//フォルダの検証
 if (previewsFolderObj.exists) {
   makePreview();
 } else {
-  var result = previewsFolderObj.create(); //戻り値はBoolean
+  var result = previewsFolderObj.create();
   if (result){
     makePreview();
   }else {
@@ -31,32 +26,25 @@ if (previewsFolderObj.exists) {
   };
 };
 
-
-/*
- * 画像の連番書き出し
- */
 function makePreview() {
-  fileList = previewsFolderObj.getFiles(); //ファイル一覧の取得
+  fileList = previewsFolderObj.getFiles();
   if (fileList.length == 0) {
-    sliceJPG(0);
+    saveJPG(0);
   }else {
-    var maxNum; //貯めていく変数
-    var docNameUnderscore = docName.split(".")[0] + "_"; // 拡張子を除いたドキュメント名 + _
+    var maxNum;
+    var docNameUnderscore = docName.split(".")[0] + "_";
     for (var i=0; i < fileList.length; i++) {
-      var fileName = fileList[i].name.split(".")[0]; //拡張子とる
+      var fileName = fileList[i].name.split(".")[0];
       if ( fileName.indexOf(docNameUnderscore) == 0 ) {
         var nameNum = parseInt(fileName.slice(docNameUnderscore.length), 10);
         maxNum = maxNum < nameNum ? nameNum : maxNum;
       }
     }
-    sliceJPG(maxNum+1);
+    saveJPG(maxNum+1);
   }
 }
 
-/*
- * JPG保存
- */
-function sliceJPG(num) {
+function saveJPG(num) {
   var numStr;
   if (num >= 0 && num < 10) {
     numStr = "_00" + num;
