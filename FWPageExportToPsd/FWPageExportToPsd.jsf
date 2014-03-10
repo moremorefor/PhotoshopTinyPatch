@@ -32,6 +32,9 @@ if(Files.exists(dir)){
 
     for (var j=0; j < fw.getDocumentDOM().pagesCount; j++) {
       fw.getDocumentDOM().changeCurrentPage(j);
+      fw.getDocumentDOM().setElementLocked(-1, -1, -1, false, true, true);
+      fw.getDocumentDOM().selectAll();
+      fw.getDocumentDOM().ungroup();
       var exportname = fw.getDocumentDOM().pageName + '.psd'
       var exportpath = Files.makePathFromDirAndFile(dir + "/" + docInfo.fileName + "/", exportname);
       fw.exportPSD(null, exportpath);
