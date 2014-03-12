@@ -7,8 +7,12 @@ One function is in one file.
 Assistant tool to create a 9patch image for Android.
 
 ### ApplyTextToLayerName
-If layer name doesn't auto change, this is useful.
+If layer name doesn't auto change, this is useful.  
 Apply text layers content to layers name.
+
+### CreateTiledObject
+Tiling the selected layer.  
+*However, it does not work well if you select the layerSet. It's a API bug in Photoshop.
 
 ### ExportPreviewImages
 Export the preview images easily.
