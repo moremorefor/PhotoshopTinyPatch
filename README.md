@@ -1,7 +1,7 @@
-PS-ScriptTools
+PhotoshopTinyPatch
 ====================
-Photoshop script tool collection.
-One tool in one file.
+Photoshop tiny script tool collection.
+One function is in one file.
 
 ### 9patch-tools
 Assistant tool to create a 9patch image for Android.
