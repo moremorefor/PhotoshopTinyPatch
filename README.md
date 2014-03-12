@@ -6,6 +6,10 @@ One tool in one file.
 ### 9patch-tools
 Assistant tool to create a 9patch image for Android.
 
+### ApplyTextToLayerName
+If layer name doesn't auto change, this is useful.
+Apply text layers content to layers name.
+
 ### ExportPreviewImages
 Export the preview images easily.
 
