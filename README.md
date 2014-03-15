@@ -12,7 +12,8 @@ Apply text layers content to layers name.
 
 ### CreateTiledObject
 Tiling the selected layer.  
-*However, it does not work well if you select the layerSet. It's a API bug in Photoshop.
+<del>*However, it does not work well if you select the layerSet. It's a API bug in Photoshop.</del>
+avoid it. But might have been added "Copy" to the layers name. It's another bug of photoshop API.
 
 ### ExportPreviewImages
 Export the preview images easily.
