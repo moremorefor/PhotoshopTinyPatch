@@ -28,7 +28,8 @@ It's Fireworks command script. All pages export to psd.
 Move Selected Layers like Illustrator's way.
 
 ### SortOrderLayers
-Sorted on the basis of the number of the layer name. *Now, ascending order only.
+Sorted on the basis of the number of the layer name. <del>*Now, ascending order only.</del>
+From the Dialog, you can select ascending or descending.
 
 ##LICENSE
 Copyright (C) more_more_for.
