@@ -27,6 +27,10 @@ It's Fireworks command script. All pages export to psd.
 ### MoveObjects
 Move Selected Layers like Illustrator's way.
 
+### RoundPathToPixelPerfect
+Rounded off the position of the anchor of the path. It is a pixel perfect shape.  
+*Now, rectangle or rounded rectangle only.
+
 ### SortOrderLayers
 Sorted on the basis of the number of the layer name. <del>*Now, ascending order only.</del>
 From the Dialog, you can select ascending or descending.
