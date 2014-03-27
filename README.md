@@ -10,6 +10,9 @@ Assistant tool to create a 9patch image for Android.
 If layer name doesn't auto change, this is useful.  
 Apply text layers content to layers name.
 
+### CreateImagesWithSerialNumbers
+Create images with serial numbers from input dialog's number. It requires a text layer.
+
 ### CreateTiledObject
 Tiling the selected layer.  
 <del>*However, it does not work well if you select the layerSet. It's a API bug in Photoshop.</del>
