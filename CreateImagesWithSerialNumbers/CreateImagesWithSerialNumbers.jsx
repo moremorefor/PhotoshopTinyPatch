@@ -46,20 +46,27 @@ function createDialog() {
         dlg.count = dlg.add('edittext', [140, 10, 240, 30]);
         dlg.labelCount = dlg.add('statictext',[10, 10, 130, 30] ,"Count:",{multiline:true});
 
+        dlg.fontsize = dlg.add('edittext', [140, 40, 240, 60]);
+        dlg.labelFontsize = dlg.add('statictext',[10, 40, 130, 60] ,"Font-size(px):",{multiline:true});
+
         dlg.cancelButton = dlg.add('button', [10, 140, 120, 170], 'cancel');
         dlg.okButton = dlg.add('button', [130, 140, 240, 170], 'OK');
 
         dlg.count.addEventListener ("keydown", handle_key );
 
         dlg.count.text = "0";
+        dlg.fontsize.text = "16";
         return dlg;
 }
 
 function initializeDialog(w) {
 
   w.okButton.onClick = w.okButton.onClick = function() {
-      var _countNum = w.count.text * 1.0;
+      var _countNum = parseInt(w.count.text, 10)
       var countNum;
+
+      var _fontsize = parseInt(w.fontsize.text, 10);
+      var fontsize;
 
       if(_countNum == null){
         countNum = 0;
@@ -67,7 +74,13 @@ function initializeDialog(w) {
         countNum = _countNum;
       }
 
-      createSerialNumberImages(countNum);
+      if(_fontsize == null){
+        fontsize = 20;
+      }else {
+        fontsize = _fontsize;
+      }
+
+      createSerialNumberImages(countNum, fontsize);
       w.close();
   }
 }
@@ -78,7 +91,7 @@ function showDialog() {
   win.show();
 }
 
-function createSerialNumberImages(countNum) {
+function createSerialNumberImages(countNum, fontsize) {
   var allLayers = openDoc.artLayers;
   var targetLayer;
   for (var i=0; i < openDoc.artLayers.length; i ++) {
@@ -96,7 +109,7 @@ function createSerialNumberImages(countNum) {
   for (var i=0; i < countNum; i++) {
     var newDoc = openDoc.duplicate();
     newDoc.activeLayer.textItem.contents = "id: " + i;
-    newDoc.activeLayer.textItem.size = 40;
+    newDoc.activeLayer.textItem.size = fontsize;
 
     var newDocWebFile = new File(assetFolderObj + "/" + docName.split(".")[0] + "_" + i +  ".png");
     var webOpt = new ExportOptionsSaveForWeb();
