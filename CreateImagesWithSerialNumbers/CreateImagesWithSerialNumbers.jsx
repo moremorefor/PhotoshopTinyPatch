@@ -47,7 +47,10 @@ function createDialog() {
         dlg.labelCount = dlg.add('statictext',[10, 10, 130, 30] ,"Count:",{multiline:true});
 
         dlg.fontsize = dlg.add('edittext', [140, 40, 240, 60]);
-        dlg.labelFontsize = dlg.add('statictext',[10, 40, 130, 60] ,"Font-size(px):",{multiline:true});
+        dlg.labelFontsize = dlg.add('statictext',[10, 40, 130, 60] ,"Font-size : ( px )",{multiline:true});
+
+        dlg.fontcolor = dlg.add('edittext', [140, 70, 240, 90]);
+        dlg.labelFontcolor = dlg.add('statictext',[10, 70, 130, 90] ,"Font-color : ( hex )",{multiline:true});
 
         dlg.cancelButton = dlg.add('button', [10, 140, 120, 170], 'cancel');
         dlg.okButton = dlg.add('button', [130, 140, 240, 170], 'OK');
@@ -56,6 +59,7 @@ function createDialog() {
 
         dlg.count.text = "0";
         dlg.fontsize.text = "16";
+        dlg.fontcolor.text = "333333";
         return dlg;
 }
 
@@ -67,6 +71,9 @@ function initializeDialog(w) {
 
       var _fontsize = parseInt(w.fontsize.text, 10);
       var fontsize;
+
+      var _fontcolor = w.fontcolor.text;
+      var fontcolor;
 
       if(_countNum == null){
         countNum = 0;
@@ -80,7 +87,14 @@ function initializeDialog(w) {
         fontsize = _fontsize;
       }
 
-      createSerialNumberImages(countNum, fontsize);
+      if(_fontcolor == null){
+        fontcolor = "666666";
+      }else {
+        fontcolor = _fontcolor.toString();
+      }
+
+
+      createSerialNumberImages(countNum, fontsize, fontcolor);
       w.close();
   }
 }
@@ -91,7 +105,7 @@ function showDialog() {
   win.show();
 }
 
-function createSerialNumberImages(countNum, fontsize) {
+function createSerialNumberImages(countNum, fontsize, fontcolor) {
   var allLayers = openDoc.artLayers;
   var targetLayer;
   for (var i=0; i < openDoc.artLayers.length; i ++) {
@@ -106,10 +120,23 @@ function createSerialNumberImages(countNum, fontsize) {
   }
 
   openDoc.activeLayer = targetLayer;
+
+  //color check
+  var rgbColor = new RGBColor();
+  try{
+    rgbColor.hexValue = fontcolor;
+  } catch(e) {
+    alert("Color is incorrect.\nApply the default color.");
+    rgbColor.hexValue = "666666";
+  }
+
   for (var i=0; i < countNum; i++) {
     var newDoc = openDoc.duplicate();
     newDoc.activeLayer.textItem.contents = "id: " + i;
     newDoc.activeLayer.textItem.size = fontsize;
+    var sColor = new SolidColor();
+    sColor.rgb = rgbColor;
+    newDoc.activeLayer.textItem.color = sColor;
 
     var newDocWebFile = new File(assetFolderObj + "/" + docName.split(".")[0] + "_" + i +  ".png");
     var webOpt = new ExportOptionsSaveForWeb();
