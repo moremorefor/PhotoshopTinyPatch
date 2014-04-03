@@ -11,7 +11,7 @@ If layer name doesn't auto change, this is useful.
 Apply text layers content to layers name.
 
 ### CreateImagesWithSerialNumbers
-Create images with serial numbers from input dialog's number. It requires a text layer.
+Create images with serial numbers from input dialog's number. <del>It requires a text layer.</del>
 
 ### CreateTiledObject
 Tiling the selected layer.  
