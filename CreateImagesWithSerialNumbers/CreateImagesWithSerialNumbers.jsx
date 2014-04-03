@@ -106,18 +106,8 @@ function showDialog() {
 }
 
 function createSerialNumberImages(countNum, fontsize, fontcolor) {
-  var allLayers = openDoc.artLayers;
-  var targetLayer;
-  for (var i=0; i < openDoc.artLayers.length; i ++) {
-    if(allLayers[i].kind == LayerKind.TEXT) {
-      targetLayer = allLayers[i];
-    }
-  }
-
-  if(!targetLayer) {
-    alert("Text Layer is not found")
-    return
-  }
+  var targetLayer = openDoc.artLayers.add();
+  targetLayer.kind = LayerKind.TEXT
 
   openDoc.activeLayer = targetLayer;
 
@@ -138,6 +128,8 @@ function createSerialNumberImages(countNum, fontsize, fontcolor) {
     sColor.rgb = rgbColor;
     newDoc.activeLayer.textItem.color = sColor;
 
+    newDoc.activeLayer.textItem.position = [0, fontsize];
+
     var newDocWebFile = new File(assetFolderObj + "/" + docName.split(".")[0] + "_" + i +  ".png");
     var webOpt = new ExportOptionsSaveForWeb();
     webOpt.format = SaveDocumentType.PNG;
@@ -146,6 +138,8 @@ function createSerialNumberImages(countNum, fontsize, fontcolor) {
 
     newDoc.close(SaveOptions.DONOTSAVECHANGES);
   }
+
+  openDoc.activeLayer.remove();
 }
 
 
