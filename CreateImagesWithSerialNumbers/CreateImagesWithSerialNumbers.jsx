@@ -129,6 +129,12 @@ function createSerialNumberImages(countNum, fontsize, fontcolor) {
     newDoc.activeLayer.textItem.color = sColor;
 
     newDoc.activeLayer.textItem.position = [0, fontsize];
+    var layerInfo = getImageInfo(newDoc.activeLayer);
+    var posX = newDoc.width - layerInfo.imageW;
+    var posY = newDoc.height - layerInfo.imageH;
+    var diffX = posX - layerInfo.imageX;
+    var diffY = posY - layerInfo.imageY;
+    newDoc.activeLayer.translate(diffX, diffY);
 
     var newDocWebFile = new File(assetFolderObj + "/" + docName.split(".")[0] + "_" + i +  ".png");
     var webOpt = new ExportOptionsSaveForWeb();
@@ -161,4 +167,16 @@ function selectFolder() {
     objFolder = new Folder(folderName);
     return objFolder;
   }
+}
+
+function getImageInfo(layer) {
+  var layObj = layer.bounds;
+  var infoX = parseInt(layObj[0]);
+  var infoY = parseInt(layObj[1]);
+  var infoW = parseInt(layObj[2] - layObj[0]);
+  var infoH = parseInt(layObj[3] - layObj[1]);
+  var centerX = infoX + infoW/2;
+  var centerY = infoY + infoH/2;
+  var imageInfoArr = {"imageX":infoX, "imageY":infoY, "imageW":infoW, "imageH":infoH, "centerX":centerX, "centerY":centerY };
+  return imageInfoArr;
 }
