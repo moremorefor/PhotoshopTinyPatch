@@ -12,19 +12,11 @@ preferences.rulerUnits = Units.PIXELS;
 
 var openDoc = activeDocument;
 var docName = openDoc.name.toString();
-
-try{
-  var fileObj= openDoc.fullName;
-  var assetFolderObj = new Folder(fileObj.parent + "/" + "SerialNumber_" + docName.split(".")[0]);
-} catch(e) {
-  var folderObj = selectFolder();
-  var assetFolderObj = new Folder(folderObj + "/" + "SerialNumber_" + docName.split(".")[0]);
-}
+var assetFolderObj;
 
 main();
 
 function main() {
-  createFolder(assetFolderObj);
   openDoc.suspendHistory('createSerialNumberImages', 'showDialog()')
 }
 
@@ -49,53 +41,98 @@ function createDialog() {
         dlg.fontsize = dlg.add('edittext', [140, 40, 240, 60]);
         dlg.labelFontsize = dlg.add('statictext',[10, 40, 130, 60] ,"Font-size : ( px )",{multiline:true});
 
-        dlg.fontcolor = dlg.add('edittext', [140, 70, 240, 90]);
-        dlg.labelFontcolor = dlg.add('statictext',[10, 70, 130, 90] ,"Font-color : ( hex )",{multiline:true});
+        dlg.selectcolorButton = dlg.add('button', [140, 70, 240, 90], "Select");
+        dlg.labelFontcolor = dlg.add('statictext',[10, 70, 130, 90] ,"Font-color :",{multiline:true});
+        dlg.fontcolor = dlg.add('statictext', [10, 100, 240, 120], "Color : ");
 
         dlg.cancelButton = dlg.add('button', [10, 140, 120, 170], 'cancel');
         dlg.okButton = dlg.add('button', [130, 140, 240, 170], 'OK');
 
-        dlg.count.addEventListener ("keydown", handle_key );
+        dlg.count.addEventListener("keydown", handle_key );
+        dlg.selectcolorButton.onClick = function(){
+          app.showColorPicker();
+          var color = app.foregroundColor.rgb.hexValue;
+          dlg.fontcolor.text = "Color : #" + color;
+          dlg.colorValue = color;
+        };
 
         dlg.count.text = "0";
         dlg.fontsize.text = "16";
-        dlg.fontcolor.text = "333333";
+        dlg.fontcolor.text = "Color : 333333";
+
+        var g = dlg.graphics;
+        var brush = g.newBrush(g.BrushType.SOLID_COLOR, [0.25, 0.25, 0.25, 1]);
+        dlg.graphics.backgroundColor = brush;
+
+        g = dlg.labelCount.graphics;
+        brush = g.newPen(g.PenType.SOLID_COLOR, [0.9, 0.9, 0.9], 1);
+        g.foregroundColor = brush;
+
+        g = dlg.labelFontsize.graphics;
+        brush = g.newPen(g.PenType.SOLID_COLOR, [0.9, 0.9, 0.9], 1);
+        g.foregroundColor = brush;
+
+        g = dlg.labelFontcolor.graphics;
+        brush = g.newPen(g.PenType.SOLID_COLOR, [0.9, 0.9, 0.9], 1);
+        g.foregroundColor = brush;
+
+        g = dlg.selectcolorButton.graphics;
+        brush = g.newPen(g.PenType.SOLID_COLOR, [0.9, 0.9, 0.9], 1);
+        g.foregroundColor = brush;
+
+        g = dlg.fontcolor.graphics;
+        brush = g.newPen(g.PenType.SOLID_COLOR, [0.9, 0.9, 0.9], 1);
+        g.foregroundColor = brush;
+
+        g = dlg.cancelButton.graphics;
+        brush = g.newPen(g.PenType.SOLID_COLOR, [0.9, 0.9, 0.9], 1);
+        g.foregroundColor = brush;
+
+        g = dlg.okButton.graphics;
+        brush = g.newPen(g.PenType.SOLID_COLOR, [0.9, 0.9, 0.9], 1);
+        g.foregroundColor = brush;
+
         return dlg;
 }
 
 function initializeDialog(w) {
 
   w.okButton.onClick = w.okButton.onClick = function() {
-      var _countNum = parseInt(w.count.text, 10)
-      var countNum;
 
-      var _fontsize = parseInt(w.fontsize.text, 10);
-      var fontsize;
+    var folderObj = selectFolder();
+    assetFolderObj = new Folder(folderObj + "/" + "PS_SerialNumberImages");
+    createFolder(assetFolderObj);
 
-      var _fontcolor = w.fontcolor.text;
-      var fontcolor;
+    var _countNum = parseInt(w.count.text, 10)
+    var countNum;
 
-      if(_countNum == null){
-        countNum = 0;
-      }else {
-        countNum = _countNum;
-      }
+    var _fontsize = parseInt(w.fontsize.text, 10);
+    var fontsize;
 
-      if(_fontsize == null){
-        fontsize = 20;
-      }else {
-        fontsize = _fontsize;
-      }
+    var _fontcolor = w.colorValue;
+    var fontcolor;
 
-      if(_fontcolor == null){
-        fontcolor = "666666";
-      }else {
-        fontcolor = _fontcolor.toString();
-      }
+    if(_countNum == null){
+      countNum = 0;
+    }else {
+      countNum = _countNum;
+    }
+
+    if(_fontsize == null){
+      fontsize = 20;
+    }else {
+      fontsize = _fontsize;
+    }
+
+    if(_fontcolor == null){
+      fontcolor = "666666";
+    }else {
+      fontcolor = _fontcolor.toString();
+    }
 
 
-      createSerialNumberImages(countNum, fontsize, fontcolor);
-      w.close();
+    createSerialNumberImages(countNum, fontsize, fontcolor);
+    w.close();
   }
 }
 
@@ -122,7 +159,7 @@ function createSerialNumberImages(countNum, fontsize, fontcolor) {
 
   for (var i=0; i < countNum; i++) {
     var newDoc = openDoc.duplicate();
-    newDoc.activeLayer.textItem.contents = "id: " + i;
+    newDoc.activeLayer.textItem.contents = "id: " + (i+1);
     newDoc.activeLayer.textItem.size = fontsize;
     var sColor = new SolidColor();
     sColor.rgb = rgbColor;
@@ -159,7 +196,7 @@ function createFolder(folderObj) {
 }
 
 function selectFolder() {
-  folderName = Folder.selectDialog("Select Folder...");
+  folderName = Folder.selectDialog("Select Save Folder...");
 
   if ((folderName == "") || (folderName == null)) {
     alert("Folder was not selected.");
