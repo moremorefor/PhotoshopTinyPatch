@@ -34,7 +34,7 @@ function handle_key (event) {
 }
 
 function createDialog() {
-        var dlg = new Window('dialog', 'Move Objects', [100, 100, 350, 290]);
+        var dlg = new Window('dialog', 'CreateImages With SerialNumbers', [100, 100, 350, 290]);
         dlg.count = dlg.add('edittext', [140, 10, 240, 30]);
         dlg.labelCount = dlg.add('statictext',[10, 10, 130, 30] ,"Count:",{multiline:true});
 
